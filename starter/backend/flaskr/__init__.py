@@ -111,14 +111,16 @@ def create_app(test_config=None):
     @app.route("/questions/<questionId>", methods=['DELETE'])
     def question_deletion(questionId):
         try:
-            Question.query.filter(Question.id == questionId).delete()
+            questionDeletion = Question.query.filter(Question.id == questionId)
+            questionDeletion.delete()
             db.session.commit()
-            # return redirect(url_for('questions_retrival'))
+            return jsonify({
+                'success': True,
+                'deleted': questionId
+            })
         except:
-            abort(404)
-        return jsonify({
-            'success': True
-        })
+            abort(422)
+
 
 
 
@@ -266,7 +268,7 @@ def create_app(test_config=None):
             question =  random.choice(totalQuestions)
         else:
             question = None
-            abort(404)
+            # abort(404)
         return jsonify({
                     'success': True,
                     'question': question

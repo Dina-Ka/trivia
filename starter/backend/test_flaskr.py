@@ -44,6 +44,13 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(len(result['categories']))
         self.assertTrue(result['categories'])
 
+    def test_categoty_retrival_404(self):
+        response = self.client().get('/categories/D9i9n9a')
+        result = json.loads(response.data)
+        self.assertEqual(result['error'], 404)
+        self.assertEqual(result['success'], False)
+
+
 
     def test_questions_retrival_200(self):
         response = self.client().get('/questions')
@@ -66,6 +73,13 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result['success'], True)
 
+    # 422
+    def test_question_deletion_422(self):
+        response = self.client().delete('/questions/dina')
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(result['success'], False)
+
     # check insertion
     def test_question_addition_200(self):
         questionData = {
@@ -83,8 +97,8 @@ class TriviaTestCase(unittest.TestCase):
 
         response = self.client().post('/questions',json=questionData)
         result = json.loads(response.data)
-        # print(result)
-        # print(lastId)
+        print(result['created'])
+        print(maximumid)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result['success'], True)
         # lastId
@@ -153,18 +167,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(result['success'], True)
         self.assertTrue(result['question'])
 
-    def test_quiz_retrival_404(self):
-        quizData = {
-            "previous_questions": [],
-            "quiz_category": {
-                "id": '100',
-                "type": 'Art'
-            }
-        }
-        response = self.client().post('/quizzes', json=quizData)
-        result = json.loads(response.data)
-        self.assertEqual(result['error'], 404)
-        self.assertEqual(result['success'], False)
 
 
 # Make the tests conveniently executable
