@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3586549-c905-4923-a508-afd5462d685f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starter/backend/flaskr/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/flaskr/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starter/backend/test_flaskr.py" beforeDir="false" afterPath="$PROJECT_DIR$/starter/backend/test_flaskr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/frontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/starter/frontend/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

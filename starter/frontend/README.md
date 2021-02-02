@@ -12,6 +12,7 @@ This project depends on Nodejs and Node Package Manager (NPM). Before continuing
 
 #### Installing project dependencies
 
+
 This project uses NPM to manage software dependencies. NPM Relies on the package.json file located in the `frontend` directory of this repository. After cloning, open your terminal and run:
 
 ```bash

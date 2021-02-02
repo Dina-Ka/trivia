@@ -89,20 +89,18 @@ class TriviaTestCase(unittest.TestCase):
             "question": 'question test test'
         }
         # getTotalnumberofQuestions
-        id = db.session.query(func.max(Question.id))
-        maximumid = ''
-        for maxid in id:
-            print(maxid[0])
-            maximumid = maxid[0] + 1
-
+        questions = Question.query.all()
+        totalQuestions = [eachquestion.format() for eachquestion in questions]
+        totalQuestionsLength = len(totalQuestions)
+        totalQuestionsLength = totalQuestionsLength+1
         response = self.client().post('/questions',json=questionData)
         result = json.loads(response.data)
-        print(result['created'])
-        print(maximumid)
+        print(result['total_questions'])
+        print(totalQuestionsLength)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result['success'], True)
         # lastId
-        self.assertEqual(result['created'], maximumid)
+        self.assertEqual(result['total_questions'], totalQuestionsLength)
 
     # check insertion
     def test_question_addition_422(self):
@@ -166,6 +164,17 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result['success'], True)
         self.assertTrue(result['question'])
+
+    def test_quiz_retrival_422(self):
+        quizData = {
+            "previous_questions": []
+        }
+        response = self.client().post('/quizzes', json=quizData)
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(result['success'], False)
+
+
 
 
 

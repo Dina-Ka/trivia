@@ -253,26 +253,31 @@ def create_app(test_config=None):
   '''
     @app.route('/quizzes', methods=['POST'])
     def quiz_retrival():
-        quiData = request.get_json()
-        quiz_category = quiData.get('quiz_category')
-        previous_questions = quiData.get('previous_questions')
-        # all
-        if quiz_category['id'] == '0' or quiz_category['type'] == 'click' :
-            allQuestions = Question.query.all()
-        # other
-        else:
-            allQuestions = Question.query.filter_by(category=quiz_category['id']).filter(Question.id.notin_((previous_questions))).all()
-        totalQuestions = [eachquestion.format() for eachquestion in allQuestions]
-        totalLength = len(totalQuestions)
-        if totalLength:
-            question =  random.choice(totalQuestions)
-        else:
-            question = None
-            # abort(404)
-        return jsonify({
-                    'success': True,
-                    'question': question
-                })
+        try:
+            quiData = request.get_json()
+            quiz_category = quiData.get('quiz_category')
+            previous_questions = quiData.get('previous_questions')
+            # all
+            if quiz_category['id'] == '0' or quiz_category['type'] == 'click' :
+                allQuestions = Question.query.filter(Question.id.notin_((previous_questions))).all()
+            # other
+            else:
+                allQuestions = Question.query.filter_by(category=quiz_category['id']).filter(Question.id.notin_((previous_questions))).all()
+            totalQuestions = [eachquestion.format() for eachquestion in allQuestions]
+            totalLength = len(totalQuestions)
+            if totalLength:
+                question =  random.choice(totalQuestions)
+            else:
+                question = None
+
+            return jsonify({
+                        'success': True,
+                        'question': question
+                    })
+        except:
+            abort(422)
+
+
     '''
   Create error handlers for all expected errors
   including 404 and 422.
